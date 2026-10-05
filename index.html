@@ -4,7 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Regiony fizycznogeograficzne Polski: nauka makroregionów na mapie</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234db6ac'/%3E%3Cpath d='M9 21l4-9 3 5 2-3 5 7z' fill='%2306231f'/%3E%3C/svg%3E" />
+<meta name="description" content="Interaktywna nauka 59 makroregionów fizycznogeograficznych Polski na mapie: quiz ze wskazywaniem regionów i tryb nauki z podziałem administracyjnym." />
+<meta name="theme-color" content="#ece8de" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#10171a" media="(prefers-color-scheme: dark)" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:title" content="Regiony fizycznogeograficzne Polski: nauka makroregionów na mapie" />
+<meta property="og:description" content="Interaktywna nauka 59 makroregionów fizycznogeograficznych Polski na mapie: quiz ze wskazywaniem regionów i tryb nauki." />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f4d7a'/%3E%3Cpath d='M9 21l4-9 3 5 2-3 5 7z' fill='%23f8f6f0'/%3E%3C/svg%3E" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="manifest.webmanifest" />
 <script>
   (function () {
     try {
@@ -37,13 +48,13 @@
       </button>
     </header>
 
-    <nav class="tabs" role="tablist">
-      <button class="tab is-active" data-mode="quiz" role="tab">Quiz</button>
-      <button class="tab" data-mode="study" role="tab">Nauka</button>
+    <nav class="tabs" role="tablist" aria-label="Tryby nauki">
+      <button class="tab is-active" id="tab-quiz" data-mode="quiz" role="tab" aria-selected="true" aria-controls="view-quiz" tabindex="0" type="button">Quiz</button>
+      <button class="tab" id="tab-study" data-mode="study" role="tab" aria-selected="false" aria-controls="view-study" tabindex="-1" type="button">Nauka</button>
     </nav>
 
     <!-- QUIZ VIEW -->
-    <section class="view view--quiz" id="view-quiz">
+    <section class="view view--quiz" id="view-quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="0">
       <div class="progress">
         <div class="progress__bar"><span id="progress-fill"></span></div>
         <div class="progress__meta">
@@ -55,23 +66,23 @@
       <div class="quiz-body">
         <div class="prompt" id="prompt">
           <span class="prompt__hint">Wskaż na mapie region</span>
-          <strong class="prompt__name" id="prompt-name">Wczytywanie…</strong>
+          <strong class="prompt__name" id="prompt-name" aria-live="polite" aria-atomic="true">Wczytywanie…</strong>
         </div>
 
-        <div class="feedback" id="feedback">
+        <div class="kbd-only">
+          <label for="kbd-answer">Tryb klawiaturowy — wybierz region z listy</label>
+          <select id="kbd-answer"></select>
+        </div>
+
+        <div class="feedback" id="feedback" role="status" aria-live="polite" aria-atomic="true">
           <span class="feedback__icon" aria-hidden="true"></span>
           <span class="feedback__text"></span>
         </div>
 
         <div class="actions">
-          <button class="btn btn--ghost" id="btn-skip">Nie wiem</button>
-          <button class="btn btn--primary" id="btn-restart">Od nowa</button>
+          <button class="btn btn--primary" id="btn-skip" type="button">Nie wiem</button>
+          <button class="btn btn--ghost" id="btn-restart" type="button">Od nowa</button>
         </div>
-
-        <p class="legend">
-          <span><i class="dot dot--ok"></i>poprawna odpowiedź</span>
-          <span><i class="dot dot--err"></i>Twoja pomyłka</span>
-        </p>
       </div>
 
       <div class="stats">
@@ -82,7 +93,7 @@
     </section>
 
     <!-- STUDY VIEW -->
-    <section class="view view--study is-hidden" id="view-study">
+    <section class="view view--study is-hidden" id="view-study" role="tabpanel" aria-labelledby="tab-study" tabindex="0">
       <p class="study__lead">Kliknij region, aby zobaczyć szczegóły. Włącz lub wyłącz podpisy na mapie.</p>
       <a class="link" href="wzorcowa-mapa.jpg" target="_blank" rel="noopener">Otwórz wzorcową mapę (JPG)</a>
       <label class="switch">
@@ -93,25 +104,31 @@
       <div class="info-card" id="info-card">
         <p class="info-card__empty">Wybierz region na mapie…</p>
       </div>
-      <button class="btn btn--primary btn--wide" id="btn-start-quiz">Rozpocznij quiz</button>
+      <button class="btn btn--primary btn--wide" id="btn-start-quiz" type="button">Rozpocznij quiz</button>
     </section>
 
     <footer class="panel__foot">
       <details>
-        <summary>O źródle danych</summary>
+        <summary>
+          <span>O źródle danych</span>
+          <svg class="chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
         <p>Granice: <em>Solon i in. 2018</em>, weryfikacja i korekta granic mezoregionów fizycznogeograficznych Polski (GDOŚ). Podział na 59 makroregionów.</p>
       </details>
     </footer>
   </aside>
 
-  <main class="map-wrap">
+  <main class="map-wrap" aria-label="Mapa makroregionów fizycznogeograficznych Polski">
     <div id="map"></div>
   </main>
 </div>
 
 <!-- RESULTS MODAL -->
-<div class="modal is-hidden" id="modal">
+<div class="modal is-hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal__box">
+    <button class="modal__close" id="btn-close-modal" type="button" aria-label="Zamknij wynik">×</button>
     <h2 id="modal-title">Wynik</h2>
     <div class="ring" id="modal-ring" style="--pct:0;--ring-color:var(--accent)">
       <span id="modal-score">0 / 59</span>
@@ -122,8 +139,8 @@
       <ul id="review-list"></ul>
     </div>
     <div class="modal__actions">
-      <button class="btn btn--primary" id="btn-again">Od nowa</button>
-      <button class="btn btn--ghost" id="btn-retry-wrong">Powtórz błędne</button>
+      <button class="btn btn--primary" id="btn-again" type="button">Od nowa</button>
+      <button class="btn btn--ghost" id="btn-retry-wrong" type="button">Powtórz błędne</button>
     </div>
   </div>
 </div>
